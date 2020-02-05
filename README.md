@@ -22,3 +22,8 @@
   
   - Monitors a given process
   - log the event if process stops and generate a mail to root
+
+# 4. port_scanner.sh
+  
+   ##Usage
+     port_scanner.sh <host>  <starting_port> <ending_port>
