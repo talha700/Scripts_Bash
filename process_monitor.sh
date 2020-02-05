@@ -1,7 +1,6 @@
 #!/bin/bash
 
 
-
 if [[ -z $1 ]]
 then
 	echo "Give Process Name"
