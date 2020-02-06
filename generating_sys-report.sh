@@ -26,7 +26,7 @@ for i in {1..50}; do echo -n = ; done ; echo -n "RAM INFO" ; for i in {1..50}; d
 printf '\n'
 
 free -h
-sudo dmidecode --type 17 | sed -n -e 12p -e 16p -e 24p -e 27p | sed 's/^[ \t]*//;s/[ \t]*$//'
+dmidecode --type 17 | sed -n -e 12p -e 16p -e 24p -e 27p | sed 's/^[ \t]*//;s/[ \t]*$//'
 
 #Display Disk info
 for i in {1..50}; do echo -n = ; done ; echo -n "DISK USAGE INFO" ; for i in {1..50}; do echo -n =; done
@@ -44,7 +44,7 @@ netstat -i
 for i in {1..50}; do echo -n = ; done ; echo -n "FIREWALL STATUS" ; for i in {1..50}; do echo -n =; done
 printf '\n'
 
-ufw status 
+timeout 1 ufw status 2> /dev/null  || firewall-cmd --list-all
 
 
 exit 0
