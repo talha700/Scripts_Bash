@@ -46,5 +46,10 @@ printf '\n'
 
 timeout 1 ufw status 2> /dev/null  || firewall-cmd --list-all
 
+for i in {1..50}; do echo -n = ; done ; echo -n "USERS LOGGED IN ?" ; for i in {1..50}; do echo -n =; done
+printf '\n'
+
+w
+
 
 exit 0
