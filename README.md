@@ -7,6 +7,7 @@
    - RAM info
    - Disk usage
    - Firewall status
+   - Connected Users
     
  # 2. top_5.sh
   ### Display the following
