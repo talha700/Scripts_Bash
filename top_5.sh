@@ -1,66 +1,60 @@
- 
 #!/bin/bash
 
 
 
-usage() {
-        echo "Usage: $0  [-mu] [-d directory]"
-        exit 1
+
+if [[ ${UID} != 0 ]]
+then
+	echo "Error: Run This Script With Root Permission"
+	exit 1
+fi
+
+BEAUTIFY() {
+	for i in {1..50}; do echo -n = ; done
+
 }
 
-while getopts d:mu OPTION
-do
-        case ${OPTION} in
-                m)
-                        DISPLAY_MEM='true'
-                        ;;
-                u)
-                        DISPLAY_CPU='true'
-                        ;;
-                d)
-                        DISPLAY_DISK='true'
-                        DIRECTORY=${OPTARG}
-                        ;;
-                ?)
-                        usage
-                        ;;
-        esac
-done
+#Display hostname info
+BEAUTIFY ; echo -n "NAME,OS,KERNEL" ; BEAUTIFY
+printf '\n'
 
-#Display top 5 processes with high memory usage
-if [[ "${DISPLAY_MEM}" = 'true' ]]
-then
+hostnamectl | sed -n -e 1p -e 6,7p
 
-    for i in {1..50}; do echo -n = ; done ; echo -n "PROCESS WITH HIGH MEMORY USAGE (^5)" ; for i in {1..50}; do echo -n =; done
-    printf "\n"
-    ps aux | sort -rnk 4 | head -n5 | awk '{print NR ,"-->" ,$0 ,'\n' }'; printf "\n"
+#Display cpu info
+BEAUTIFY ; echo -n "CPU INFO" ;  BEAUTIFY
+printf '\n'
 
-fi
+lscpu | sed -n -e 14p -e 1p -e 8p -e 16,18p -e 7p -e 20,24p
 
+#Display RAM info
+BEAUTIFY ; echo -n "RAM INFO" ; BEAUTIFY
+printf '\n'
 
+free -h && echo " "
+sudo dmidecode --type 17 | sed -n -e 12p -e 16p -e 24p -e 27p | sed 's/^[ \t]*//;s/[ \t]*$//'
 
+#Display Disk info
+BEAUTIFY ; echo -n "DISK USAGE INFO" ; BEAUTIFY
+printf '\n'
 
-# Display top 5 processes with high cpu usage
-if [[ ${DISPLAY_CPU} == 'true' ]]
-then
+df -h
 
-    for i in {1..50}; do echo -n =; done ; echo -n "PROCESS WITH HIGH CPU USAGE (^5)" ; for i in {1..50}; do echo -n =; done
-    printf "\n"
-    ps aux | sort -rnk 3 | head -n5 | awk '{print NR ,"-->" ,$0 ,'\n' }'; printf "\n"
-fi
+#Display network info
+BEAUTIFY ; echo -n "TRAFFIC INFO" ; BEAUTIFY
+printf '\n'
 
+netstat -i
 
+#Display firewall info
+BEAUTIFY; echo -n "FIREWALL STATUS" ; BEAUTIFY
+printf '\n'
 
-#Display Directories with high disk usage
-if [[ ${DISPLAY_DISK} == 'true' ]]
-then
+timeout 1 ufw status 2> /dev/null  || firewall-cmd --list-all
 
-    for i in {1..50}; do echo -n =; done ; echo -n "DIRECTORIES WITH HIGH DISK USAGE (^5)" ; for i in {1..50}; do echo -n =; done ; printf "\n"
-    du -h "${DIRECTORY}"  | sort -rh | head -n5
-fi
+BEAUTIFY; echo -n "USERS LOGGED IN ?" ; BEAUTIFY
+printf '\n'
 
-printf "\n"
+w
 
 
-
-exit 0
+exit 0 
