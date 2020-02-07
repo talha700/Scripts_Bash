@@ -6,7 +6,7 @@
    - CPU info
    - RAM info
    - Disk usage
-   - Firewall status (for ufw)
+   - Firewall status
     
  # 2. top_5.sh
   ### Display the following
