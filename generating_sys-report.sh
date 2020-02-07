@@ -32,7 +32,7 @@ dmidecode --type 17 | sed -n -e 12p -e 16p -e 24p -e 27p | sed 's/^[ \t]*//;s/[ 
 for i in {1..50}; do echo -n = ; done ; echo -n "DISK USAGE INFO" ; for i in {1..50}; do echo -n =; done
 printf '\n'
 
-lsblk
+df -h
 
 #Display network info
 for i in {1..50}; do echo -n = ; done ; echo -n "TRAFFIC INFO" ; for i in {1..50}; do echo -n =; done
