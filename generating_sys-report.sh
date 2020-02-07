@@ -5,7 +5,7 @@
 
 if [[ ${UID} != 0 ]]
 then
-        echo "Error: Run This Script With Root Permission"
+        echo "Error: Run This Script With Root Permission" 1>&2
         exit 1
 fi
 
