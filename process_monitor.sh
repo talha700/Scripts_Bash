@@ -3,7 +3,7 @@
 
 if [[ -z $1 ]]
 then
-	echo "Give Process Name"
+	echo "Give Process Name" 1>&2
 	exit 1
 fi
 
