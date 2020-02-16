@@ -26,6 +26,6 @@
 
 # 4. port_scanner.sh
   
-   ##Usage
+   ## Usage
    
       port_scanner.sh <host>  <starting_port> <ending_port>
